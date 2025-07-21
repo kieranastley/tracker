@@ -26,10 +26,10 @@ p {
   text-align: center;
 }
 
-/* Optional: Style the main element if needed */
+/* --- Main Section --- */
 main {
-  /* max-width: 800px; */
-  /* width: 100%; */
+  max-width: 800px;
+  width: 100%;
 }
 
 /* --- Streak History Section --- */
