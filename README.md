@@ -10,7 +10,7 @@ This project is designed to support a long-term commitment to sobriety through a
 - A dark, distraction-free aesthetic for focus and calm
 
 ## 🌐 Live Site
-[https://kurlymeister.github.io/strong/](https://kurlymeister.github.io/strong/)
+[https://kurlymeister.github.io/habits/](https://kurlymeister.github.io/habits/)
 
 ## 📦 Planned Features
 - Reset button to manually update the sobriety start date
