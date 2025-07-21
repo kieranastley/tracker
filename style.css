@@ -7,7 +7,8 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh; /* Use min-height for flexibility */
+  min-height: 100vh;
+  /* Use min-height for flexibility */
   margin: 0;
   padding: 1.5rem;
   box-sizing: border-box;
@@ -27,8 +28,58 @@ p {
 
 /* Optional: Style the main element if needed */
 main {
-  /* You can add styles specifically for the main container here if desired */
-  /* For example: */
   /* max-width: 800px; */
   /* width: 100%; */
+}
+
+/* --- Streak History Section --- */
+#streak-history {
+  margin-top: 2.5rem;
+  width: 100%;
+  max-width: 600px;
+  color: #fff;
+  font-size: 1rem;
+}
+
+#streak-history h2 {
+  font-size: 1.6rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #f5f5f5;
+}
+
+.streak-item {
+  margin-bottom: 1.2rem;
+}
+
+.streak-label {
+  margin-bottom: 0.3rem;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: #ddd;
+}
+
+.streak-bar {
+  height: 20px;
+  background: #444;
+  /* Track background */
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.streak-bar::after {
+  content: '';
+  display: block;
+  height: 100%;
+  width: var(--fill, 0%);
+  background: #ccc;
+  /* Default streak fill */
+  transition: width 0.6s ease;
+}
+
+/* Ongoing (current) streak appears slightly lighter */
+.streak-item.ongoing .streak-bar::after {
+  background: #eee;
 }

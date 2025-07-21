@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,12 +8,24 @@
   <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <main>
+    <!-- Main sobriety counter -->
     <h1 id="days-counter">Alcohol free for 0 days</h1>
-    <p id="detailed-timer">It has been 0 days, 0 hours, 0 minutes, 0 seconds since my last drink.</p>
+    <p id="detailed-timer">
+      It has been 0 days, 0 hours, 0 minutes, 0 seconds since my last drink.
+    </p>
+
+    <!-- Streak history league table -->
+    <section id="streak-history">
+      <h2>Streak History</h2>
+      <!-- Populated dynamically by script.js -->
+      <div id="streak-list"></div>
+    </section>
   </main>
 
   <script src="script.js" defer></script>
 </body>
+
 </html>
