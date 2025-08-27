@@ -60,26 +60,24 @@ main {
   color: #ddd;
 }
 
-.streak-bar {
-  height: 20px;
-  background: #444;
-  /* Track background */
-  border-radius: 10px;
-  overflow: hidden;
-  position: relative;
+/* Circle-based streak representation */
+.streak-circles {
+  display: flex;
+  gap: 0.5em;
+  margin-top: 0.3em;
 }
 
-.streak-bar::after {
-  content: '';
-  display: block;
-  height: 100%;
-  width: var(--fill, 0%);
+.streak-circle {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
   background: #ccc;
-  /* Default streak fill */
-  transition: width 0.6s ease;
+  display: inline-block;
+  transition: background 0.3s;
+  border: 2px solid #444;
 }
 
-/* Ongoing (current) streak appears slightly lighter */
-.streak-item.ongoing .streak-bar::after {
+.streak-item.ongoing .streak-circle {
   background: #eee;
+  border-color: #888;
 }
