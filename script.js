@@ -89,13 +89,23 @@ function renderStreaks() {
     const widthPercent = (streak.duration / maxDays) * 100;
     const ongoingClass = streak.end ? '' : 'ongoing';
 
+    // Determine how many circles to show
+    const showCount = Math.min(streak.duration, MAX_CIRCLES);
+    const extra = streak.duration > MAX_CIRCLES ? streak.duration - MAX_CIRCLES : 0;
+
+    // Build circles HTML
+    const circles = Array.from({ length: showCount })
+      .map(() => `<span class="streak-circle"></span>`)
+      .join('') +
+      (extra > 0 ? `<span class="streak-circle" title="...and ${extra} more">+${extra}</span>` : '');
+
     return `
       <div class="streak-item ${ongoingClass}">
         <div class="streak-label">
           <span>${streak.duration} days</span>
           <span>${startLabel} – ${endLabel}</span>
         </div>
-        <div class="streak-bar" style="--fill: ${widthPercent}%"></div>
+        <div class="streak-circles">${circles}</div>
       </div>
     `;
   }).join('');
