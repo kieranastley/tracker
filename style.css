@@ -60,24 +60,31 @@ main {
   color: #ddd;
 }
 
-/* Circle-based streak representation */
-.streak-circles {
+/* --- Adjustments for the new dot-based design --- */
+.streak-bar {
+  /* No longer needed */
   display: flex;
-  gap: 0.5em;
-  margin-top: 0.3em;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.1rem; /* Adjust the gap between dots as needed */
+  margin-top: 0.5rem;
+  height: auto; /* Changed from fixed height */
+  background: none; /* Removed background */
 }
 
-.streak-circle {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: #ccc;
-  display: inline-block;
-  transition: background 0.3s;
-  border: 2px solid #444;
+.streak-dot {
+  width: 8px; /* Size of the dot */
+  height: 8px; /* Size of the dot */
+  background-color: #ccc; /* Color of the dot */
+  border-radius: 50%; /* Makes it a circle */
+  transition: all 0.3s ease;
 }
 
-.streak-item.ongoing .streak-circle {
-  background: #eee;
-  border-color: #888;
+.ongoing .streak-dot {
+  background-color: #eee; /* A different color for dots in the current streak */
+}
+
+.streak-dot:hover {
+  transform: scale(1.5);
+  cursor: pointer;
 }

@@ -1,11 +1,4 @@
-// JavaScript file
-
-// ---- Streak Dates ----
-
-// Your current streak 
-const currentStreakStart = new Date('2025-08-27T06:00:00+10:00');
-
-// Previous streaks
+// Streaks data
 const pastStreaks = [
   {
     start: new Date('2025-04-08T06:00:00+10:00'),
@@ -13,61 +6,41 @@ const pastStreaks = [
   },
   {
     start: new Date('2025-07-21T06:00:00+10:00'),
-    end: new Date('2025-08-12T17:00:00+10:00') 
+    end: new Date('2025-08-12T06:00:00+10:00')
   }
 ];
 
-// Build the full streak list (past + current)
+const currentStreakStart = new Date();
+
+// Combine all streaks into one array
 const streaks = [
-  ...pastStreaks,
-  {
+  ...pastStreaks, {
     start: currentStreakStart,
-    end: null // Ongoing streak
+    end: null
   }
 ];
 
-// ---- DOM References ----
-const daysCounterElement = document.getElementById('days-counter');
-const detailedTimerElement = document.getElementById('detailed-timer');
-const streakListElement = document.getElementById('streak-list');
-
-// ---- Utility Functions ----
-
-// Calculate whole days between two dates
-function calcDays(start, end) {
-  return Math.max(0, Math.floor((end - start) / (1000 * 60 * 60 * 24)));
+// --- Utility Functions ---
+function calcDays(startDate, endDate) {
+  const diffInMs = endDate - startDate;
+  const days = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+  return days > 0 ? days : 0;
 }
 
-// ---- Timer Logic (for main counter) ----
-function updateTimer() {
-  const now = new Date();
-  const diff = now - currentStreakStart;
-
-  // Calculate total units
-  const seconds = Math.max(0, Math.floor(diff / 1000));
-  const minutes = Math.max(0, Math.floor(seconds / 60));
-  const hours = Math.max(0, Math.floor(minutes / 60));
-  const days = Math.max(0, Math.floor(hours / 24));
-
-  // Remaining units for display
-  const remHours = hours % 24;
-  const remMinutes = minutes % 60;
-  const remSeconds = seconds % 60;
-
-  // Update DOM
-  if (daysCounterElement) {
-    daysCounterElement.textContent = `Alcohol free for ${days} days`;
-  }
-  if (detailedTimerElement) {
-    detailedTimerElement.textContent = `It has been ${days} days, ${remHours} hours, ${remMinutes} minutes, ${remSeconds} seconds since my last drink.`;
-  }
+function formatDate(date) {
+  return date.toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric'
+  });
 }
 
-// ---- Streak History Rendering ----
+// --- Rendering Functions ---
+const streakListElement = document.getElementById('streak-history-list');
+
 function renderStreaks() {
   const now = new Date();
 
-  // Calculate durations
+  // Map over the streaks to calculate duration
   const streakData = streaks.map(streak => {
     const end = streak.end || now;
     return {
@@ -79,25 +52,14 @@ function renderStreaks() {
   // Sort by duration (longest first)
   streakData.sort((a, b) => b.duration - a.duration);
 
-  // Find the longest streak for scaling bar widths
-  const maxDays = streakData[0]?.duration || 1;
-
   // Build HTML for each streak
   const html = streakData.map(streak => {
     const endLabel = streak.end ? formatDate(streak.end) : 'Present';
     const startLabel = formatDate(streak.start);
-    const widthPercent = (streak.duration / maxDays) * 100;
     const ongoingClass = streak.end ? '' : 'ongoing';
 
-    // Determine how many circles to show
-    const showCount = Math.min(streak.duration, MAX_CIRCLES);
-    const extra = streak.duration > MAX_CIRCLES ? streak.duration - MAX_CIRCLES : 0;
-
-    // Build circles HTML
-    const circles = Array.from({ length: showCount })
-      .map(() => `<span class="streak-circle"></span>`)
-      .join('') +
-      (extra > 0 ? `<span class="streak-circle" title="...and ${extra} more">+${extra}</span>` : '');
+    // Create a new array of dot elements for each day of the streak
+    const dots = Array.from({ length: streak.duration }, (_, i) => `<div class="streak-dot"></div>`).join('');
 
     return `
       <div class="streak-item ${ongoingClass}">
@@ -105,7 +67,9 @@ function renderStreaks() {
           <span>${streak.duration} days</span>
           <span>${startLabel} – ${endLabel}</span>
         </div>
-        <div class="streak-circles">${circles}</div>
+        <div class="streak-bar">
+          ${dots}
+        </div>
       </div>
     `;
   }).join('');
@@ -115,20 +79,7 @@ function renderStreaks() {
   }
 }
 
-// Format dates as DD/MM/YYYY (Australian style)
-function formatDate(date) {
-  const d = date.getDate().toString().padStart(2, '0');
-  const m = (date.getMonth() + 1).toString().padStart(2, '0');
-  const y = date.getFullYear();
-  return `${d}/${m}/${y}`;
-}
-
-// ---- Initialise ----
-updateTimer();
-renderStreaks();
-
-// Update every second so both the counter and the current streak bar stay live
-setInterval(() => {
-  updateTimer();
+// Initial render
+document.addEventListener('DOMContentLoaded', () => {
   renderStreaks();
-}, 1000);
+});
