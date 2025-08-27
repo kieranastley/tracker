@@ -3,13 +3,17 @@
 // ---- Streak Dates ----
 
 // Your current streak 
-const currentStreakStart = new Date('2025-07-21T06:00:00+10:00');
+const currentStreakStart = new Date('2025-08-27T06:00:00+10:00');
 
-// Previous longest streak: 8 April 2025, 6:00am → 4 July 2025, 5:00pm
+// Previous streaks
 const pastStreaks = [
   {
     start: new Date('2025-04-08T06:00:00+10:00'),
     end: new Date('2025-07-04T17:00:00+10:00')
+    {
+    start: new Date('2025-07-21T06:00:00+10:00'),
+    end: new Date('2025-08-12T06:00:00+10:00') 
+  }
   }
 ];
 
