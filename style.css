@@ -34,7 +34,7 @@ main {
 
 /* --- Streak History Section --- */
 #streak-history {
-  margin-top: 2.5rem;
+  margin: 7.5rem auto 0; /* Updated to combine margin-top and centering */
   width: 100%;
   max-width: 600px;
   color: #fff;
@@ -66,15 +66,15 @@ main {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.1rem; /* Adjust the gap between dots as needed */
+  gap: 0.5rem; /* Adjust the gap between dots as needed */
   margin-top: 0.5rem;
   height: auto; /* Changed from fixed height */
   background: none; /* Removed background */
 }
 
 .streak-dot {
-  width: 8px; /* Size of the dot */
-  height: 8px; /* Size of the dot */
+  width: 16px; /* Size of the dot */
+  height: 16px; /* Size of the dot */
   background-color: #ccc; /* Color of the dot */
   border-radius: 50%; /* Makes it a circle */
   transition: all 0.3s ease;

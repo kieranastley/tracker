@@ -6,11 +6,12 @@ const pastStreaks = [
   },
   {
     start: new Date('2025-07-21T06:00:00+10:00'),
-    end: new Date('2025-08-12T06:00:00+10:00')
+    end: new Date('2025-08-12T17:00:00+10:00')
   }
 ];
 
-const currentStreakStart = new Date();
+// The start date of your new streak. Change this to the exact date and time your new streak began.
+const currentStreakStart = new Date('2025-08-27T06:00:00+10:00');
 
 // Combine all streaks into one array
 const streaks = [
@@ -34,9 +35,31 @@ function formatDate(date) {
   });
 }
 
-// --- Rendering Functions ---
-const streakListElement = document.getElementById('streak-history-list');
+// --- DOM Elements ---
+const streakListElement = document.getElementById('streak-list');
+const daysCounterElement = document.getElementById('days-counter');
+const detailedTimerElement = document.getElementById('detailed-timer');
 
+// --- Rendering Functions ---
+
+// Function to update the main counter in real-time
+function updateMainCounter() {
+  const now = new Date();
+  const diff = now - currentStreakStart;
+
+  // Calculate days, hours, minutes, and seconds
+  const seconds = Math.floor((diff / 1000) % 60);
+  const minutes = Math.floor((diff / (1000 * 60)) % 60);
+  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+  // Update the counter text
+  daysCounterElement.textContent = `Alcohol free for ${days} days`;
+  detailedTimerElement.textContent = `It has been ${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds since my last drink.`;
+}
+
+
+// Function to render the streak history
 function renderStreaks() {
   const now = new Date();
 
@@ -79,7 +102,9 @@ function renderStreaks() {
   }
 }
 
-// Initial render
+// Initial render and then update every second
 document.addEventListener('DOMContentLoaded', () => {
   renderStreaks();
+  updateMainCounter();
+  setInterval(updateMainCounter, 1000);
 });
