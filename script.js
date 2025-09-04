@@ -11,7 +11,7 @@ const pastStreaks = [
 ];
 
 // The start date of your new streak. Change this to the exact date and time your new streak began.
-const currentStreakStart = new Date('2025-08-27T06:00:00+10:00');
+const currentStreakStart = new Date('2025-08-31T06:00:00+10:00');
 
 // Combine all streaks into one array
 const streaks = [
