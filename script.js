@@ -7,11 +7,19 @@ const pastStreaks = [
   {
     start: new Date('2025-07-21T06:00:00+10:00'),
     end: new Date('2025-08-12T17:00:00+10:00')
+  },
+  {
+    start: new Date('2025-08-31T06:00:00+10:00'),
+    end: new Date('2025-11-15T13:00:00+10:00')
   }
 ];
 
 // The start date of your new streak. Change this to the exact date and time your new streak began.
-const currentStreakStart = new Date('2025-08-31T06:00:00+10:00');
+// Set to null when pausing, or update with a new Date when starting/resuming a streak.
+const currentStreakStart = null;
+
+// Set to false to pause the counter (e.g., during times when you know you'll be drinking)
+const isCounterActive = false;
 
 // Combine all streaks into one array
 const streaks = [
@@ -44,6 +52,8 @@ const detailedTimerElement = document.getElementById('detailed-timer');
 
 // Function to update the main counter in real-time
 function updateMainCounter() {
+  if (!isCounterActive || !currentStreakStart) return;
+
   const now = new Date();
   const diff = now - currentStreakStart;
 
@@ -63,8 +73,11 @@ function updateMainCounter() {
 function renderStreaks() {
   const now = new Date();
 
+  // Filter out the current streak if counter is not active
+  const streaksToRender = isCounterActive ? streaks : pastStreaks;
+
   // Map over the streaks to calculate duration
-  const streakData = streaks.map(streak => {
+  const streakData = streaksToRender.map(streak => {
     const end = streak.end || now;
     return {
       ...streak,
@@ -104,6 +117,10 @@ function renderStreaks() {
 
 // Initial render and then update every second
 document.addEventListener('DOMContentLoaded', () => {
+  if (!isCounterActive) {
+    daysCounterElement.textContent = 'Currently drinking, cheers!';
+    detailedTimerElement.textContent = '';
+  }
   renderStreaks();
   updateMainCounter();
   setInterval(updateMainCounter, 1000);
